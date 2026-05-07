@@ -57,8 +57,8 @@ services:
       - PGID=1000
       - TZ=${TZ}
     volumes:
-      - /srv/appdata/audiobookshelf/config:/config
-      - /srv/appdata/audiobookshelf/metadata:/audiobooks
+      - /srv/appdata/${SERVICE}/config:/config
+      - /srv/appdata/${SERVICE}/metadata:/audiobooks
       - /srv/media/podcasts:/podcasts
       - /srv/media/metadata:/metadata
     depends_on:
