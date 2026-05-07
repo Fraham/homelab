@@ -57,7 +57,7 @@ services:
       - PGID=1000
       - TZ=${TZ}
     volumes:
-      - /srv/appdata/config/config:/config
+      - /srv/appdata/${SERVICE}/config:/config
     depends_on:
       tailscale:
         condition: service_healthy
