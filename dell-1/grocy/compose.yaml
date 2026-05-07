@@ -4,7 +4,7 @@ configs:
       {"TCP":{"443":{"HTTPS":true}},
       "Web":{"$${TS_CERT_DOMAIN}:443":
           {"Handlers":{"/":
-          {"Proxy":"http://127.0.0.1:5006"}}}},
+          {"Proxy":"http://127.0.0.1:9283"}}}},
       "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
 
 services:
@@ -52,12 +52,14 @@ services:
     image: ${IMAGE_URL} # Image to be used
     network_mode: service:tailscale # Sidecar configuration to route ${SERVICE} through Tailscale
     container_name: app-${SERVICE} # Name for local container management
+    ports:
+      - 9283:80
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
     volumes:
-      - ./${SERVICE}-data:/data
+      - /srv/appdata/config/config:/config
     depends_on:
       tailscale:
         condition: service_healthy
