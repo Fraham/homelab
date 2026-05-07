@@ -4,7 +4,7 @@ configs:
       {"TCP":{"443":{"HTTPS":true}},
       "Web":{"$${TS_CERT_DOMAIN}:443":
           {"Handlers":{"/":
-          {"Proxy":"http://127.0.0.1:3001"}}}},
+          {"Proxy":"http://127.0.0.1:80"}}}},
       "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
 
 services:
@@ -15,8 +15,6 @@ services:
     image: tailscale/tailscale:latest # Image to be used
     container_name: tailscale-${SERVICE} # Name for local container management
     hostname: ${SERVICE} # Name used within your Tailscale environment
-    ports:
-      - 3001:80
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
@@ -57,6 +55,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - HTTPS_METHOD=noredirect
       - TZ=${TZ}
     volumes:
       - /srv/appdata/config/config:/config
