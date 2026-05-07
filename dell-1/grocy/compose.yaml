@@ -1,11 +1,11 @@
 configs:
   ts-serve:
     content: |
-      {"TCP":{"443":{"HTTPS":true}},
-      "Web":{"$${TS_CERT_DOMAIN}:443":
+      {"TCP":{"444":{"HTTPS":true}},
+      "Web":{"$${TS_CERT_DOMAIN}:444":
           {"Handlers":{"/":
           {"Proxy":"http://127.0.0.1:80"}}}},
-      "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
+      "AllowFunnel":{"$${TS_CERT_DOMAIN}:444":false}}
 
 services:
 # Make sure you have updated/checked the .env file with the correct variables. 
