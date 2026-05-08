@@ -39,7 +39,11 @@ services:
     network_mode: service:tailscale # Sidecar configuration to route ${SERVICE} through Tailscale
     container_name: app-${SERVICE} # Name for local container management
     environment:
-      PORT: 45876
+      - PORT: 45876
+      - LISTEN: 45876
+      - KEY: ${KEY}
+      - TOKEN: ${TOKEN}
+      - HUB_URL: ${HUB_URL}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro # Read-only access to the docker.sock
       - /srv/appdata/${SERVICE}/data:/var/lib/beszel-agent
