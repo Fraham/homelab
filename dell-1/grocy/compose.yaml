@@ -56,6 +56,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
+      - GROCY_CURRENCY=GBP
     volumes:
       - /srv/appdata/${SERVICE}/config:/config
     depends_on:
