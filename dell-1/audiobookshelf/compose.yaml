@@ -58,7 +58,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /srv/appdata/${SERVICE}/config:/config
-      - /srv/appdata/${SERVICE}/metadata:/audiobooks
+      - /srv/media/audiobooks:/audiobooks
       - /srv/media/podcasts:/podcasts
       - /srv/media/metadata:/metadata
     depends_on:
