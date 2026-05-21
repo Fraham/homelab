@@ -8,7 +8,7 @@ services:
     user: "0:0"
     volumes:
       - /srv/appdata:/data:ro
-      - /root/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro
+      - /root/.config/rclone/:/config/rclone/:ro
     environment:
       - TZ=Europe/London # Matches your local timezone for the folder dates
     entrypoint: ["/bin/sh", "-c"]
