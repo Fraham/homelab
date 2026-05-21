@@ -26,7 +26,8 @@ services:
             --exclude "**/*.log*" \
             --exclude "**/state/**" \
             --exclude "**/tailscaled.log1.txt" \
-            --exclude "**/data.db-wal" 
+            --exclude "**/data.db-wal" \
+            --exclude "**/access.log.1"
           
           # 2. Purge files older than 7 days
           rclone delete --min-age 7d dropbox_backup:HomelabBackups/
