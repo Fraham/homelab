@@ -1,13 +1,50 @@
 services:
-  dropbox-backup:
-    image: pfidr/rclone:latest
-    container_name: homelab_dropbox_backup
-    restart: unless-stopped
-    environment:
-      - CRON=0 2 * * *
-      - RCLONE_CMD=copy /backup_sources/ dropbox_backup:HomelabBackups
-      - RCLONE_CLEANUP_CMD=delete --min-age 30d dropbox_backup:HomelabBackups
+  rclone-backup:
+    image: rclone/rclone:latest
+    container_name: rclone-backup
+
+    command: tail -f /dev/null
+
     volumes:
+      - /srv/appdata:/data:ro
       - ~/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro
-      - /srv/appdata:/backup_sources/appdata:ro
-      
+
+    labels:
+      ofelia.enabled: "true"
+
+      # Run every day at 02:00
+      ofelia.job-exec.backup.schedule: "0 2 * * *"
+
+      ofelia.job-exec.backup.command: >
+        sh -c '
+        TODAY=$(date +\%F);
+
+        echo "Starting backup for $TODAY";
+
+        rclone copy /data dropbox-crypt:homelab-appdata/$TODAY \
+          --create-empty-src-dirs \
+          --exclude "**/cache/**" \
+          --exclude "**/tmp/**" \
+          --exclude "**/logs/**";
+
+        echo "Pruning backups older than 7 days";
+
+        rclone delete dropbox-crypt:homelab-appdata \
+          --min-age 7d \
+          --rmdirs;
+
+        echo "Backup complete";
+        '
+
+    restart: unless-stopped
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: ofelia
+
+    command: daemon --docker
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    restart: unless-stopped
