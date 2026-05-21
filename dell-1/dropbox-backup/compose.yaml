@@ -5,9 +5,10 @@ services:
     image: rclone/rclone:latest
     container_name: rclone_dropbox_backup
     restart: unless-stopped
+    user: "0:0"
     volumes:
       - /srv/appdata:/data:ro
-      - ~/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro
+      - /root/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro
     environment:
       - TZ=Europe/London # Matches your local timezone for the folder dates
     entrypoint: ["/bin/sh", "-c"]
