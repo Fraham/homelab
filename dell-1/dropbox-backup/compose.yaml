@@ -3,9 +3,6 @@ services:
     image: rclone/rclone:latest
     container_name: rclone-backup
 
-    entrypoint: ["/bin/sh", "-c"]
-    command: "sleep infinity"
-
     volumes:
       - /srv/appdata:/data:ro
       - ~/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro
