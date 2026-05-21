@@ -1,0 +1,13 @@
+services:
+  dropbox-backup:
+    image: pfidr/rclone:latest
+    container_name: homelab_dropbox_backup
+    restart: unless-stopped
+    environment:
+      - CRON=0 2 * * *
+      - RCLONE_CMD=copy /backup_sources/ dropbox_backup:HomelabBackups
+      - RCLONE_CLEANUP_CMD=delete --min-age 30d dropbox_backup:HomelabBackups
+    volumes:
+      - ~/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro
+      - /srv/appdata:/backup_sources/appdata:ro
+      
