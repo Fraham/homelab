@@ -3,7 +3,8 @@ services:
     image: rclone/rclone:latest
     container_name: rclone-backup
 
-    command: tail -f /dev/null
+    entrypoint: ["/bin/sh", "-c"]
+    command: "sleep infinity"
 
     volumes:
       - /srv/appdata:/data:ro
@@ -12,29 +13,23 @@ services:
     labels:
       ofelia.enabled: "true"
 
-      # Run every day at 02:00
       ofelia.job-exec.backup.schedule: "0 2 * * *"
 
       ofelia.job-exec.backup.command: >
-        sh -c '
-        TODAY=$(date +\%F);
+        TODAY=$$(date +\%F) &&
+        echo "Starting backup for $$TODAY" &&
 
-        echo "Starting backup for $TODAY";
-
-        rclone copy /data dropbox-crypt:homelab-appdata/$TODAY \
+        rclone copy /data dropbox_backup:HomelabBackups/$$TODAY \
           --create-empty-src-dirs \
           --exclude "**/cache/**" \
           --exclude "**/tmp/**" \
-          --exclude "**/logs/**";
+          --exclude "**/logs/**" &&
 
-        echo "Pruning backups older than 7 days";
+        echo "Removing backups older than 7 days" &&
 
-        rclone delete dropbox-crypt:homelab-appdata \
+        rclone delete dropbox_backup:HomelabBackups \
           --min-age 7d \
-          --rmdirs;
-
-        echo "Backup complete";
-        '
+          --rmdirs
 
     restart: unless-stopped
 
