@@ -18,7 +18,15 @@ services:
           echo "Starting daily backup: $$(date)"
           
           # 1. Copy to a new dated folder
-          rclone copy /data/ dropbox_backup:HomelabBackups/backup-$$(date +%Y-%m-%d) --exclude "/rclone/**"
+          rclone copy /data/ dropbox_backup:HomelabBackups/backup-$$(date +%Y-%m-%d) --exclude "/rclone/**" \
+            --create-empty-src-dirs \
+            --exclude "**/cache/**" \
+            --exclude "**/tmp/**" \
+            --exclude "**/logs/**" \
+            --exclude "**/*.log*" \
+            --exclude "**/state/**" \
+            --exclude "**/tailscaled.log1.txt" \
+            --exclude "**/data.db-wal" 
           
           # 2. Purge files older than 7 days
           rclone delete --min-age 7d dropbox_backup:HomelabBackups/
