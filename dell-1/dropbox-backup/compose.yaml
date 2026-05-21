@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - /srv/appdata:/data:ro
-      - /srv/appdata/rclone/rclone.conf:/config/rclone/rclone.conf
+      - ~/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro
     environment:
       - TZ=Europe/London # Matches your local timezone for the folder dates
     entrypoint: ["/bin/sh", "-c"]
