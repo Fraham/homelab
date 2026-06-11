@@ -115,8 +115,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      migration:
-        condition: service_completed_successfully
+      #migration:
+        #condition: service_completed_successfully
     environment:
       - PUID=1000
       - PGID=1000
