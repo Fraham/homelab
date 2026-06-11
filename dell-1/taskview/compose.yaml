@@ -54,8 +54,6 @@ services:
     image: gimanhead/taskview-ce-webapp:latest
     restart: unless-stopped
     network_mode: service:tailscale
-    ports:
-      - "8888:80"
     depends_on:
       tailscale:
         condition: service_healthy
