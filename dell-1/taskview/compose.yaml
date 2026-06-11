@@ -128,7 +128,7 @@ services:
       - DB_PORT=5432
       - APP_PORT=1401
       - JWT_ALG="HS256"
-      - JWT_SIGN="secret"
+      - JWT_SIGN="${JWT_SIGN}"
       - ACCESS_LIFE_TIME="3d"
       - REFRESH_LIFE_TIME="9d"
       - APP_URL="${APP_URL}"
