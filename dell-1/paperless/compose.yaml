@@ -32,6 +32,11 @@ services:
       - PAPERLESS_ADMIN_PASSWORD=${PAPERLESS_ADMIN_PASSWORD}
       - PAPERLESS_REDIS=redis://broker:6379
       - PAPERLESS_DBHOST=db
+    labels:
+      - docktail.service.enable=true
+      - docktail.service.name=${SERVICE}
+      - docktail.service.port=${SERVICE_PORT}
+      - docktail.service.service-port=443
 
   db:
     image: docker.io/library/postgres:18
