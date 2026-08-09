@@ -2,7 +2,7 @@ services:
   # ${SERVICE}
   application:
     image: ${IMAGE_URL} # Image to be used
-    network_mode: service:tailscale # Sidecar configuration to route ${SERVICE} through Tailscale
+
     container_name: app-${SERVICE} # Name for local container management
     environment:
       PORT: 45876
