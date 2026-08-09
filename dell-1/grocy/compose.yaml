@@ -1,12 +1,3 @@
-configs:
-  ts-serve:
-    content: |
-      {"TCP":{"444":{"HTTPS":true}},
-      "Web":{"$${TS_CERT_DOMAIN}:444":
-          {"Handlers":{"/":
-          {"Proxy":"http://127.0.0.1:80"}}}},
-      "AllowFunnel":{"$${TS_CERT_DOMAIN}:444":false}}
-
 services:
   application:
     image: ${IMAGE_URL} # Image to be used
