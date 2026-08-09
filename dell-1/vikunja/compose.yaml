@@ -25,7 +25,4 @@ services:
     volumes:
       - /srv/appdata/${SERVICE}/files:/app/vikunja/files
       - /srv/appdata/${SERVICE}/db:/db
-    depends_on:
-      tailscale:
-        condition: service_healthy
     restart: always
