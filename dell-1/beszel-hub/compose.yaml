@@ -24,9 +24,6 @@ services:
       - docktail.service.service-port=443
     volumes:
       - /srv/appdata/${SERVICE}/data:/beszel_data  # Work directory for Beszel Hub - you may need to change the path
-    depends_on:
-      tailscale:
-        condition: service_healthy
     healthcheck:
       test: ['CMD', '/beszel', 'health', '--url', 'http://localhost:8090'] # Check if Beszel Hub is running and accessible
       interval: 1m # How often to perform the check

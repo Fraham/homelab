@@ -22,9 +22,6 @@ services:
     volumes:
       - /srv/appdata/${SERVICE}/config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
-    depends_on:
-      tailscale:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "pgrep", "-f", "next-server"] # Check if ${SERVICE} process is running
       interval: 1m # How often to perform the check

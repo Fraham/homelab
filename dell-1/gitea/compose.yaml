@@ -23,7 +23,4 @@ services:
       - docktail.service.service-port=443
     volumes:
       - /srv/appdata/${SERVICE}/data:/data
-    depends_on:
-      tailscale:
-        condition: service_healthy
     restart: always

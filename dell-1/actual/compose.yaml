@@ -26,9 +26,6 @@ services:
       - docktail.service.service-port=443
     volumes:
       - /srv/appdata/${SERVICE}/data:/data
-    depends_on:
-      tailscale:
-        condition: service_healthy
     healthcheck:
       # Enable health check for the instance
       test: ['CMD-SHELL', 'node src/scripts/health-check.js']

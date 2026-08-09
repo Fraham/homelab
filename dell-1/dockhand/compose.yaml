@@ -22,9 +22,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /srv/appdata/${SERVICE}/data:/app/data # Data directory for Dockhand - you may need to change the path
-    depends_on:
-      tailscale:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://127.0.0.1:41234/healthz"] # Check if ${SERVICE} is responding
       interval: 1m # How often to perform the check

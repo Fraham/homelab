@@ -27,9 +27,6 @@ services:
       - /srv/media/audiobooks:/audiobooks
       - /srv/media/podcasts:/podcasts
       - /srv/media/metadata:/metadata
-    depends_on:
-      tailscale:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "pgrep", "-f", "${SERVICE}"] # Check if ${SERVICE} process is running
       interval: 1m # How often to perform the check

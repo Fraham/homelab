@@ -25,9 +25,6 @@ services:
       - /srv/appdata/${SERVICE}/etc-pihole:/etc/pihole
       - /srv/appdata/${SERVICE}/etc-dnsmasq.d:/etc/dnsmasq.d
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    depends_on:
-      tailscale:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "pgrep", "-f", "pihole-FTL"] # Check if ${SERVICE} process is running
       interval: 1m # How often to perform the check
