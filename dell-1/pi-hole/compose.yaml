@@ -12,9 +12,6 @@ services:
     image: tailscale/tailscale:latest
     container_name: tailscale-${SERVICE}
     hostname: ${SERVICE}
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
