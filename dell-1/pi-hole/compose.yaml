@@ -12,9 +12,6 @@ services:
     container_name: pihole-tailscale
     image: tailscale/tailscale:latest
     restart: unless-stopped
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
     environment:
       TS_AUTHKEY: ${TS_AUTHKEY}
       TS_ACCEPT_DNS: false
@@ -33,6 +30,9 @@ services:
     image: ${IMAGE_URL}
     network_mode: service:tailscale
     container_name: app-${SERVICE}
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
     environment:
       PUID: 1000
       PGID: 1000
