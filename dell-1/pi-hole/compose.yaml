@@ -9,40 +9,25 @@ configs:
 
 services:
   tailscale:
+    container_name: pihole-tailscale
     image: tailscale/tailscale:latest
-    container_name: tailscale-${SERVICE}
-    hostname: ${SERVICE}
+    restart: unless-stopped
     ports:
       - 53:53/tcp
       - 53:53/udp
     environment:
-      - TS_AUTHKEY=${TS_AUTHKEY}
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_SERVE_CONFIG=/config/serve.json
-      - TS_USERSPACE=false
-      - TS_ENABLE_HEALTH_CHECK=true             
-      - TS_LOCAL_ADDR_PORT=127.0.0.1:41234
-      - TS_ACCEPT_DNS= false    
-      - TS_AUTH_ONCE=true
-      - TS_HOSTNAME= pihole
-    configs:
-      - source: ts-serve
-        target: /config/serve.json
+      TS_AUTHKEY: ${TS_AUTHKEY}
+      TS_ACCEPT_DNS: false
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_USERSPACE: false
+      TS_HOSTNAME: pihole
     volumes:
-      - ./config:/config
-      - ./ts/state:/var/lib/tailscale
-    devices:
-      - /dev/net/tun:/dev/net/tun
+      - /mnt/user/appdata/tailscale-pihole:/var/lib/tailscale
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:41234/healthz"]
-      interval: 1m
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    restart: always
+    devices:
+      - /dev/net/tun:/dev/net/tun
 
   application:
     image: ${IMAGE_URL}
