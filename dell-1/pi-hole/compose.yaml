@@ -13,7 +13,7 @@ services:
     container_name: tailscale-${SERVICE}
     hostname: ${SERVICE}
     ports:
-      # - 53:53/tcp
+      - 53:53/tcp
       - 53:53/udp
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
@@ -21,9 +21,10 @@ services:
       - TS_SERVE_CONFIG=/config/serve.json
       - TS_USERSPACE=false
       - TS_ENABLE_HEALTH_CHECK=true             
-      - TS_LOCAL_ADDR_PORT=127.0.0.1:41234      
-    
+      - TS_LOCAL_ADDR_PORT=127.0.0.1:41234
+      - TS_ACCEPT_DNS= false    
       - TS_AUTH_ONCE=true
+      - TS_HOSTNAME= pihole
     configs:
       - source: ts-serve
         target: /config/serve.json
@@ -50,6 +51,8 @@ services:
       PUID: 1000
       PGID: 1000
       TZ: ${TZ}
+      FTLCONF_dns_listeningMode: ALL
+      FTLCONF_dns_domainNeeded: true
       FTLCONF_dns_revServers: |-
         true,192.168.0.0/24,192.168.0.1,lan
         true,100.64.0.0/10,100.100.100.100
