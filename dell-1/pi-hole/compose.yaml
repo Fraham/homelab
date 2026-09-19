@@ -70,3 +70,9 @@ services:
       retries: 3
       start_period: 30s
     restart: always
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
