@@ -53,6 +53,11 @@ services:
       TZ: ${TZ}
       FTLCONF_dns_listeningMode: ALL
       FTLCONF_dns_domainNeeded: true
+      FTLCONF_dns_upstreams: |-
+        9.9.9.9
+        149.112.112.112
+        2620:fe::fe
+        2620:fe::9
       FTLCONF_dns_revServers: |-
         true,192.168.0.0/24,192.168.0.1,lan
         true,100.64.0.0/10,100.100.100.100
@@ -62,10 +67,8 @@ services:
     volumes:
       - /srv/appdata/${SERVICE}/etc-pihole:/etc/pihole
       - /srv/appdata/${SERVICE}/etc-dnsmasq.d:/etc/dnsmasq.d
-  
     depends_on:
-      tailscale:
-        condition: service_healthy
+      - tailscale
     healthcheck:
       test: ["CMD", "pgrep", "-f", "pihole-FTL"]
       interval: 1m
