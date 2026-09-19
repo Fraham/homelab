@@ -30,9 +30,6 @@ services:
     image: ${IMAGE_URL}
     network_mode: service:tailscale
     container_name: app-${SERVICE}
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
     environment:
       PUID: 1000
       PGID: 1000
@@ -62,9 +59,3 @@ services:
       retries: 3
       start_period: 30s
     restart: always
-
-networks:
-  default:
-    ipam:
-      config:
-        - subnet: 172.30.0.0/16
